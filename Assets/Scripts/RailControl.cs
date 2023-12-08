@@ -15,7 +15,7 @@ public class RailControl : MonoBehaviour
 
     //Rails of movement
     [SerializeField] Transform railsParent;//Its children are the diferrent rails
-    [SerializeField] float[] rails;//Array of X position of each rail
+    private float[] rails;//Array of X position of each rail
     private Vector3 currentRail;//Vector of current rail position
     public int currentIndex = 1;//Index of current rail (in array)
 

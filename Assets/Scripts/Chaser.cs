@@ -95,7 +95,6 @@ public class Chaser : MonoBehaviour
 
             Debug.Log("Chaser caught target");
 
-            //DERROTAA///////////////////////
         }
     }
 

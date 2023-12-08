@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class StaminaSystem : MonoBehaviour
 {
-
-
     [SerializeField] Transform obstacleChecker;
     [SerializeField] LayerMask damageLayer;
 
@@ -21,10 +19,7 @@ public class StaminaSystem : MonoBehaviour
 
     public StaminaBar staminaBar;
 
-
-
     bool crash = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +32,6 @@ public class StaminaSystem : MonoBehaviour
     {
         CheckObstacle();
 
-
         if (!useFixedUpdate)
         {
             stamina -= changePerSecond * Time.deltaTime;
@@ -46,12 +40,9 @@ public class StaminaSystem : MonoBehaviour
 
     }
 
-
-
-
     private void CheckObstacle()
     {
-        //Creates a sphere in checker that's triggered by an object of the stop layer (obstacle)
+        //Creates a sphere in checker that's triggered by an object of the damage layer (obstacle)
         if (Physics.CheckSphere(obstacleChecker.position, .3f, damageLayer))
         {
             if (!crash)

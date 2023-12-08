@@ -26,13 +26,9 @@ public class EndlessRunner : MonoBehaviour
     [SerializeField] AudioSource jumpSound;
     
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-
-        
             Debug.Log("Game has started!");
 
             //Save player's rigid body in emptybox
@@ -40,19 +36,13 @@ public class EndlessRunner : MonoBehaviour
 
             parent = transform.parent;
 
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
             MoveForward();
             Input();
-        
-        
-
-        
     }
 
     //Move forward automatically if possible (no obstacle in front)
@@ -97,9 +87,7 @@ public class EndlessRunner : MonoBehaviour
     {
         //Maintains velocities in x and z axis but increments the y with jumpforce
         player.velocity = new Vector3(player.velocity.x, jumpForce, player.velocity.z);
-        jumpSound.Play(); // because we have our own method for the jump, we add the audio here and works everytime
-        // not needing to add more code in every case the player jumps, great!! ;p
-        // always try to avoid DUPLICATION!
+        jumpSound.Play();
     }
 
     //check it's touching ground JUST WITH FEET
