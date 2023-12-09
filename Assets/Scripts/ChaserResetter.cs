@@ -15,7 +15,7 @@ public class ChaserResetter : MonoBehaviour
     [SerializeField] float safeDist = 8.0f;
 
     //Sounds
-    //[SerializeField] AudioSource callingSound;
+    [SerializeField] AudioSource policeSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +29,9 @@ public class ChaserResetter : MonoBehaviour
     //Resets chaser position to a safe distance behind target
     private void ResetChaserPos()
     {
-        chaser.localPosition = new Vector3(target.localPosition.x, chaser.localPosition.y, target.localPosition.z - safeDist);
+        chaser.localPosition = new Vector3(target.localPosition.x, chaser.localPosition.y, chaser.localPosition.z - safeDist);
+
+        policeSound.Play();//Calls police
 
         Debug.Log("Position of chaser reset");
     }

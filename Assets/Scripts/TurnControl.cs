@@ -16,6 +16,9 @@ public class TurnControl : MonoBehaviour
     bool left = false;//Has turned left
     bool right = false;//has turned right
 
+    //Sounds
+    [SerializeField] AudioSource turningSound;
+
     // Update is called once per frame
     void Update()
     {
@@ -60,6 +63,8 @@ public class TurnControl : MonoBehaviour
                 transform.Rotate(0f, -90f, 0f);
                 left = false;
 
+                turningSound.Play();
+
                 Debug.Log("Has rotated to left");
             }
 
@@ -68,6 +73,8 @@ public class TurnControl : MonoBehaviour
             {
                 transform.Rotate(0f, 90f, 0f);
                 right = false;
+
+                turningSound.Play();
 
                 Debug.Log("Has rotated to right");
             }

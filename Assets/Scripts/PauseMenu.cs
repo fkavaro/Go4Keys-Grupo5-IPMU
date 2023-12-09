@@ -11,6 +11,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenuUI;
     private bool GameInPause = false;
 
+    //Sounds
+    [SerializeField] AudioSource pauseSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,8 @@ public class PauseMenu : MonoBehaviour
         //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            pauseSound.Play();
+
             if (GameInPause)
             {
                 Resume();
