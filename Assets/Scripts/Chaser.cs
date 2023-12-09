@@ -21,6 +21,8 @@ public class Chaser : MonoBehaviour
     [SerializeField] Transform chaserChecker;//To jump automatically
     [SerializeField] Transform targetChecker;//To adjust chase speed
 
+    [SerializeField] GameObject pauseMenuUI;
+
     //Booleans
     bool targetCaught = false;//Chaser hit target
 
@@ -92,6 +94,7 @@ public class Chaser : MonoBehaviour
         {
             targetCaught = true;
             result.YouLost();
+            pauseMenuUI.SetActive(true);
 
             Debug.Log("Chaser caught target");
 

@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   chaser: {fileID: 0}
-  safeDist: 8
+  safeDist: 5
   policeSound: {fileID: 6981480652824272483}
 --- !u!82 &6981480652824272483
 AudioSource:

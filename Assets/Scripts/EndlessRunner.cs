@@ -24,7 +24,10 @@ public class EndlessRunner : MonoBehaviour
 
     // Audio setting
     [SerializeField] AudioSource jumpSound;
-    
+
+    public StaminaSystem staminaSystem;
+    public Result result;
+    [SerializeField] GameObject pauseMenuUI;
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +38,26 @@ public class EndlessRunner : MonoBehaviour
             player = transform.GetComponent<Rigidbody>();
 
             parent = transform.parent;
+            pauseMenuUI.SetActive(false);
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        float stamina=staminaSystem.getStamina();
+        if (stamina > 0)
+        {
             MoveForward();
             Input();
+        }
+        else
+        {
+            result.lostResultUI.SetActive(true);
+            Time.timeScale = 0f;
+            pauseMenuUI.SetActive(true);
+
+        }
     }
 
     //Move forward automatically if possible (no obstacle in front)

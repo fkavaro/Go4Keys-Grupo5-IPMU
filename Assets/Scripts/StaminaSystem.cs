@@ -10,12 +10,16 @@ public class StaminaSystem : MonoBehaviour
 
     // AUDIO
     [SerializeField] AudioSource energyDrinkSound;
+    
+    
 
     public float maxStamina = 100;
     public float stamina;
 
     public bool useFixedUpdate;
-    public float changePerSecond = 1f;
+    public float changePerSecond = 2f;
+    public float lossForCrash = 5f;
+    public float recover = 5f;
 
     public StaminaBar staminaBar;
 
@@ -47,7 +51,7 @@ public class StaminaSystem : MonoBehaviour
         {
             if (!crash)
             {
-                LoseStamina(5f);
+                LoseStamina(lossForCrash);
                 crash = true;
             }
 
@@ -60,7 +64,7 @@ public class StaminaSystem : MonoBehaviour
     }
 
     private void LoseStamina(float value)
-    {
+    { 
         stamina = stamina - value;
         staminaBar.SetStamina(stamina);
     }
@@ -73,11 +77,16 @@ public class StaminaSystem : MonoBehaviour
 
             //Destroys it
             Destroy(other.gameObject);
-            stamina = stamina + 5f;
+            stamina = stamina + recover;
             energyDrinkSound.Play();
             staminaBar.SetStamina(stamina);
 
         }
+    }
+
+    public float getStamina()
+    {
+        return stamina;
     }
 
 
