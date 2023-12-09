@@ -29,7 +29,7 @@ public class TurnControl : MonoBehaviour
         }
     }
 
-    //Check trigger with an intersection
+    //Check trigger with an object
     private void OnTriggerEnter(Collider other)
     {
         //With an intersection
