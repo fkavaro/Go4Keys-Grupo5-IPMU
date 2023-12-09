@@ -8,12 +8,13 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
+    [SerializeField] bool showTutorial = true;//Learn tutorial
     [SerializeField] Transform popUpsParent;//Its children are the popUps
     private GameObject[] popUps;//Array of popUps
     private int current = 0;//Current popUp
 
     [SerializeField] Transform checker;//Detects intersection
-    [SerializeField] float checkerRadious = 2f;
+    [SerializeField] float checkerRadious = 1f;
     [SerializeField] LayerMask triggerMask;//Intersection
     private bool atIntersection = false;
     
@@ -22,6 +23,12 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Want to learn the tutorial
+        if (showTutorial)
+        {
+            popUpsParent.gameObject.SetActive(true);
+        }
+
         //Creates array the size of number of children of popUpsParent
         popUps = new GameObject[popUpsParent.childCount];
 
