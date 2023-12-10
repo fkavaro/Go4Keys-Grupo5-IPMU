@@ -1,15 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.Audio;
 
 //HANDLES KEYBOARD INPUTS TO MOVE PLAYER BETWEEN RAILS
 
 public class RailControl : MonoBehaviour
 {
-
     //Speed
     [SerializeField] float sideSpeed = 6.0f;//Changing of rail
 

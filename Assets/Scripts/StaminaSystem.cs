@@ -1,29 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StaminaSystem : MonoBehaviour
 {
     [SerializeField] Transform obstacleChecker;
     [SerializeField] LayerMask damageLayer;
+    [SerializeField] float lossPerSecond = 1f;
+    [SerializeField] float lossPerCrash = 5f;
+    [SerializeField] float recover = 15f;
+    [SerializeField] StaminaBar staminaBar;
+    [SerializeField] PauseMenu pauseMenu;
+    [SerializeField] Result result;
 
     // AUDIO
     [SerializeField] AudioSource energyDrinkSound;
-    
-    
 
-    public float maxStamina = 100;
-    public float stamina;
-
-    public bool useFixedUpdate;
-    public float changePerSecond = 2f;
-    public float lossForCrash = 5f;
-    public float recover = 5f;
-
-    public StaminaBar staminaBar;
-
-    bool crash = false;
+    private float maxStamina = 100;
+    private float stamina;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +26,20 @@ public class StaminaSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckObstacle();
-
-        if (!useFixedUpdate)
+        //Has enough stamina
+        if (stamina > 0)
         {
-            stamina -= changePerSecond * Time.deltaTime;
-            staminaBar.SetStamina(stamina);
-        }
+            CheckObstacle();
 
+            //Reduces stamina every second
+            LoseStamina(lossPerSecond);
+        }
+        //Doesn't have any more stamina
+        else
+        {
+            pauseMenu.EndResult();//End game UI
+            result.Stamina();//Result
+        }
     }
 
     private void CheckObstacle()
@@ -49,23 +47,14 @@ public class StaminaSystem : MonoBehaviour
         //Creates a sphere in checker that's triggered by an object of the damage layer (obstacle)
         if (Physics.CheckSphere(obstacleChecker.position, .3f, damageLayer))
         {
-            if (!crash)
-            {
-                LoseStamina(lossForCrash);
-                crash = true;
-            }
-
+            //Loses stamina after hit
+            LoseStamina(lossPerCrash);
         }
-        else
-        {
-            crash = false;
-        }
-
     }
 
     private void LoseStamina(float value)
-    { 
-        stamina = stamina - value;
+    {
+        stamina -= value * Time.deltaTime;
         staminaBar.SetStamina(stamina);
     }
 
@@ -74,29 +63,16 @@ public class StaminaSystem : MonoBehaviour
         //If the object triggered is an energy drink
         if (other.gameObject.CompareTag("EnergyDrink"))
         {
-
             //Destroys it
             Destroy(other.gameObject);
-            stamina = stamina + recover;
-            energyDrinkSound.Play();
-            staminaBar.SetStamina(stamina);
 
+            stamina += recover * Time.deltaTime;
+
+            energyDrinkSound.Play();
+
+            staminaBar.SetStamina(stamina);
         }
     }
-
-    public float getStamina()
-    {
-        return stamina;
-    }
-
-
-
-    private void FixedUpdate()
-    {
-        stamina -= changePerSecond * Time.deltaTime;
-        staminaBar.SetStamina(stamina);
-    }
-
 }
 
 

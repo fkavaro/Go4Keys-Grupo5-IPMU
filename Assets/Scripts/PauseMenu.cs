@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//HANDLES PAUSE MENU
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseButton;
-    [SerializeField] GameObject resumeButton;
+    public GameObject resumeButton;
+    [SerializeField] GameObject replayButton;
     [SerializeField] GameObject pauseMenuUI;
-    private bool GameInPause = false;
+    private bool gameInPause = false;
+    private bool gameEnded = false;
 
     //Sounds
     [SerializeField] AudioSource pauseSound;
@@ -17,8 +19,11 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;//Normal time
+
         pauseButton.SetActive(true);//Shows pause button
         resumeButton.SetActive(false);//Hides resume button
+        replayButton.SetActive(false);//Hides replay button
         pauseMenuUI.SetActive(false);//Hides pause menu UI
     }
 
@@ -30,35 +35,79 @@ public class PauseMenu : MonoBehaviour
         {
             pauseSound.Play();
 
-            if (GameInPause)
+            //Game hasn't finished
+            if (!gameEnded)
             {
-                Resume();
+                //Game paused
+                if (gameInPause)
+                {
+                    Resume();
+                }
+                //Game unpaused
+                else
+                {
+                    Pause();
+                }
             }
+            //Game has finished
             else
             {
-                Pause();
+                //Replays game
+                ReplayGame();
             }
+            
         }
+    }
+
+    //End result UI (shows replay game button as well)
+    public void EndResult()
+    {
+        gameEnded = true;
+
+        pauseMenuUI.SetActive(true);
+        resumeButton.SetActive(false);
+        pauseButton.SetActive(false);
+        replayButton.SetActive(true);
+
+        Time.timeScale = 0f;
     }
 
     //Resumes simulation
     public void Resume()
     {
+        gameInPause = false;
+
         pauseMenuUI.SetActive(false);
         resumeButton.SetActive(false);
         pauseButton.SetActive(true);
+        replayButton.SetActive(false);
+
         Time.timeScale = 1f;
-        GameInPause = false;
     }
 
     //Stops simulation
     public void Pause()
-    {
+    {        
+        gameInPause = true;
+
         pauseMenuUI.SetActive(true);
         resumeButton.SetActive(true);
         pauseButton.SetActive(false);
+        replayButton.SetActive(false);
+
         Time.timeScale = 0f;
-        GameInPause = true;
+    }
+
+    //Replays game
+    public void ReplayGame()
+    {
+        Time.timeScale = 1f;//Resumes simulation
+
+        //Get the current active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        //Reload the current scene
+        SceneManager.LoadScene(currentScene.name);
     }
 
     public void BackToMenu()

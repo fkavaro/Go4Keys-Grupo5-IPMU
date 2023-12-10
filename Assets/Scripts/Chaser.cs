@@ -8,8 +8,9 @@ public class Chaser : MonoBehaviour
     [SerializeField] Transform target;//Object to chase
 
     //Speeds
-    [SerializeField] float chaseSpeed = 0.3f;//Related to its local position (parent)
-    float chaseSpeedValue;//Initial chase speed
+    [SerializeField] float chaseSpeed = 0.2f;//Related to its local position (parent)
+    private float originalSpeed;//Initial chase speed
+    private  float speedIncrement = 4f;
     [SerializeField] float jumpForce = 7.0f;
 
     //Trigger layer
@@ -21,17 +22,16 @@ public class Chaser : MonoBehaviour
     [SerializeField] Transform chaserChecker;//To jump automatically
     [SerializeField] Transform targetChecker;//To adjust chase speed
 
-    [SerializeField] GameObject pauseMenuUI;
-
     //Booleans
     bool targetCaught = false;//Chaser hit target
 
-
-    public Result result;
+    //Classes of UI
+    [SerializeField] PauseMenu pauseMenu;
+    [SerializeField] Result result;
 
     void Start()
     {
-        chaseSpeedValue = chaseSpeed;//Save initial chase speed
+        originalSpeed = chaseSpeed;//Save initial chase speed
     }
 
     void Update()
@@ -51,13 +51,15 @@ public class Chaser : MonoBehaviour
         // Check for obstacles in front of target
         if (Physics.CheckSphere(targetChecker.position, .3f, jumpsOver))
         {
+            Debug.Log("Chaser speed increased");
+
             //Increment chase speed because player has stopped
-            chaseSpeed += chaseSpeedValue / 2;
+            chaseSpeed = originalSpeed + speedIncrement;
         }
         else
         {
             //Original chase speed
-            chaseSpeed = chaseSpeedValue;
+            chaseSpeed = originalSpeed;
         }
     }
 
@@ -92,15 +94,15 @@ public class Chaser : MonoBehaviour
         //The object collisioned has the same tag as the target
         if (collision.transform.CompareTag(target.transform.tag))
         {
-            targetCaught = true;
-            result.YouLost();
-            pauseMenuUI.SetActive(true);
-
             Debug.Log("Chaser caught target");
+
+            targetCaught = true;
+
+            pauseMenu.EndResult();//End game UI
+            result.Caught();//Result
 
         }
     }
-
 }
 
 ////////////////////////////////////////////////////////////////////////////

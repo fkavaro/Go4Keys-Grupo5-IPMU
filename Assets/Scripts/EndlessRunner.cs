@@ -22,42 +22,28 @@ public class EndlessRunner : MonoBehaviour
     [SerializeField] LayerMask jumpLayer;//Only jump when touching this layer
     [SerializeField] LayerMask stopLayer;//Stops when touching this layer
 
-    // Audio setting
+    //Audio
     [SerializeField] AudioSource jumpSound;
 
-    public StaminaSystem staminaSystem;
-    public Result result;
-    [SerializeField] GameObject pauseMenuUI;
+    //private float stamina;
 
     // Start is called before the first frame update
     void Start()
     {
-            Debug.Log("Game has started!");
+        Debug.Log("Game has started!");
 
-            //Save player's rigid body in emptybox
-            player = transform.GetComponent<Rigidbody>();
+        //Save player's rigid body in emptybox
+        player = transform.GetComponent<Rigidbody>();
 
-            parent = transform.parent;
-            pauseMenuUI.SetActive(false);
+        parent = transform.parent;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        float stamina=staminaSystem.getStamina();
-        if (stamina > 0)
-        {
-            MoveForward();
-            Input();
-        }
-        else
-        {
-            result.lostResultUI.SetActive(true);
-            Time.timeScale = 0f;
-            pauseMenuUI.SetActive(true);
-
-        }
+        MoveForward();
+        Input();
     }
 
     //Move forward automatically if possible (no obstacle in front)

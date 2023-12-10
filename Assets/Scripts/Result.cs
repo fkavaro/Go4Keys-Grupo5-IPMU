@@ -1,24 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Result : MonoBehaviour
 {
-    public GameObject wonResultUI;
-    public GameObject lostResultUI;
+    [SerializeField] GameObject victoryAdvice;
+    [SerializeField] GameObject caughtAdvice;
+    [SerializeField] GameObject staminaAdvice;
 
+    //Sounds
+    [SerializeField] AudioSource victorySound;
+    [SerializeField] AudioSource lossSound;
 
-    public void YouWon()
+    // Start is called before the first frame update
+    void Start()
     {
-
-        wonResultUI.SetActive(true);
-        Time.timeScale = 0f;
+        victoryAdvice.SetActive(false);
+        caughtAdvice.SetActive(false);
+        staminaAdvice.SetActive(false);
     }
-    public void YouLost()
+
+    public void Victory()
     {
-        lostResultUI.SetActive(true);
-        Time.timeScale = 0f;
+        victorySound.Play();
 
+        victoryAdvice.SetActive(true);
     }
+    public void Caught()
+    {
+        lossSound.Play();
+
+        caughtAdvice.SetActive(true);
+    }
+
+    public void Stamina()
+    {
+        lossSound.Play();
+
+        staminaAdvice.SetActive(true);
+    }
+
 
 }
