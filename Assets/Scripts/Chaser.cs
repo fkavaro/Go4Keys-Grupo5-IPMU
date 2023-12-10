@@ -16,7 +16,7 @@ public class Chaser : MonoBehaviour
     //Trigger layer
     [SerializeField] LayerMask jumpsOver;//Will automatically jump over this layer
     [SerializeField] LayerMask jumpsOn;//Will jump if also touches this layer
-    [SerializeField] float checkerRadious = 1f;//Radious of chaser checker
+    [SerializeField] float checkerRadious = 1.5f;//Radious of chaser checker
 
     //Checkers
     [SerializeField] Transform chaserChecker;//To jump automatically
@@ -24,6 +24,7 @@ public class Chaser : MonoBehaviour
 
     //Booleans
     bool targetCaught = false;//Chaser hit target
+    bool targetRunning = false;
 
     //Classes of UI
     [SerializeField] PauseMenu pauseMenu;
@@ -53,6 +54,9 @@ public class Chaser : MonoBehaviour
         {
             Debug.Log("Chaser speed increased");
 
+            //Target has stopped
+            targetRunning = false;
+
             //Increment chase speed because player has stopped
             chaseSpeed = originalSpeed + speedIncrement;
         }
@@ -60,6 +64,9 @@ public class Chaser : MonoBehaviour
         {
             //Original chase speed
             chaseSpeed = originalSpeed;
+
+            //Target is running
+            targetRunning = true;
         }
     }
 
@@ -77,9 +84,11 @@ public class Chaser : MonoBehaviour
     {
         // Check for obstacles and jump if it's also touching ground
         if (Physics.CheckSphere(chaserChecker.position, checkerRadious, jumpsOver)
-            && Physics.CheckSphere(chaserChecker.position, checkerRadious, jumpsOn))
-        {
-            Jump();
+            && Physics.CheckSphere(chaserChecker.position, checkerRadious, jumpsOn)) {
+            //Jumps if target is running
+            if (targetRunning) { 
+                Jump();
+            }
         }
     }
 

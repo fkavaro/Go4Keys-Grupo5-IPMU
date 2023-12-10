@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 4474677399834582276}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4103084811826501276
 BoxCollider:
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   chaser: {fileID: 0}
-  safeDist: 5
+  safeDist: 8
   policeSound: {fileID: 6981480652824272483}
 --- !u!82 &6981480652824272483
 AudioSource:

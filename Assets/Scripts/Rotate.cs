@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-//MAKES THE GAMEOBJECT ROTATE 
+//MAKES AUTOMATIC ROTATION
 
 public class Rotate : MonoBehaviour
 {

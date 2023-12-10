@@ -5,8 +5,8 @@ public class StaminaSystem : MonoBehaviour
     [SerializeField] Transform obstacleChecker;
     [SerializeField] LayerMask damageLayer;
     [SerializeField] float lossPerSecond = 1f;
-    [SerializeField] float lossPerCrash = 5f;
-    [SerializeField] float recover = 15f;
+    [SerializeField] float lossPerCrash = 10f;
+    [SerializeField] float recover = 20f;
     [SerializeField] StaminaBar staminaBar;
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] Result result;
@@ -30,9 +30,6 @@ public class StaminaSystem : MonoBehaviour
         if (stamina > 0)
         {
             CheckObstacle();
-
-            //Reduces stamina every second
-            LoseStamina(lossPerSecond);
         }
         //Doesn't have any more stamina
         else
@@ -45,10 +42,17 @@ public class StaminaSystem : MonoBehaviour
     private void CheckObstacle()
     {
         //Creates a sphere in checker that's triggered by an object of the damage layer (obstacle)
+        //Has hit an obstacle
         if (Physics.CheckSphere(obstacleChecker.position, .3f, damageLayer))
         {
-            //Loses stamina after hit
+            //Loses stamina on hit
             LoseStamina(lossPerCrash);
+        }
+        //No obstacle in front
+        else
+        {
+            //Reduces stamina every second
+            LoseStamina(lossPerSecond);
         }
     }
 
@@ -58,6 +62,7 @@ public class StaminaSystem : MonoBehaviour
         staminaBar.SetStamina(stamina);
     }
 
+    //If triggers an energy drink
     private void OnTriggerEnter(Collider other)//works same as onCollisionEnter
     {
         //If the object triggered is an energy drink
@@ -66,7 +71,13 @@ public class StaminaSystem : MonoBehaviour
             //Destroys it
             Destroy(other.gameObject);
 
-            stamina += recover * Time.deltaTime;
+            stamina += recover;
+
+            //Ensures stamina max
+            if (stamina > maxStamina)
+            {
+                stamina = maxStamina;
+            }
 
             energyDrinkSound.Play();
 

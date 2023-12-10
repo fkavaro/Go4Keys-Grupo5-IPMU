@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Result : MonoBehaviour
 {
@@ -38,6 +37,4 @@ public class Result : MonoBehaviour
 
         staminaAdvice.SetActive(true);
     }
-
-
 }

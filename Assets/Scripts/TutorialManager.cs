@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 //HANDLES TUTOIRIAL POP-UPS
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] bool showTutorial = true;//Learn tutorial
+    [SerializeField] bool showTutorial = false;//Learn tutorial
     [SerializeField] Transform popUpsParent;//Its children are the popUps
     private GameObject[] popUps;//Array of popUps
     private int current = 0;//Current popUp
@@ -27,157 +23,161 @@ public class TutorialManager : MonoBehaviour
         if (showTutorial)
         {
             popUpsParent.gameObject.SetActive(true);
+
+
+            //Creates array the size of number of children of popUpsParent
+            popUps = new GameObject[popUpsParent.childCount];
+
+            //Fills the array with each gameObject
+            for (int i = 0; i < popUps.Length; i++)
+            {
+                popUps[i] = popUpsParent.GetChild(i).gameObject;
+
+                //Deactivates all popUps
+                popUps[i].SetActive(false);
+            }
         }
-
-        //Creates array the size of number of children of popUpsParent
-        popUps = new GameObject[popUpsParent.childCount];
-
-        //Fills the array with each gameObject
-        for (int i = 0; i < popUps.Length; i++)
-        {
-            popUps[i] = popUpsParent.GetChild(i).gameObject;
-
-            //Deactivates all popUps
-            popUps[i].SetActive(false);
-        }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckIntersection();
-
-        switch (current)
+        //Want to learn the tutorial
+        if (showTutorial)
         {
-            //Move left 'A'
-            case 0:
-                popUps[current].SetActive(true);
+            CheckIntersection();
 
-                //When 'A' pressed
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=1;
-                }
-                break;
-
-            //Move right 'D'
-            case 1:
-                popUps[current].SetActive(true);
-
-                //When 'D' pressed
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=2;
-                }
-                break;
-
-            //Jump 'Space'
-            case 2:
-                popUps[current].SetActive(true);
-
-                //When 'Space' pressed
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=3;
-                }
-                break;
-
-            //Stamina
-            case 3:
-                popUps[current].SetActive(true);
-
-                //Pauses simulation so that player can read the popUp
-                PauseGame();
-
-                //When any key down
-                if (Input.anyKeyDown)
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=4;
-                }
-                break;
-
-            //Keys
-            case 4:
-                popUps[current].SetActive(true);
-
-                //Simulation is still paused
-
-                //When any key down
-                if (Input.anyKeyDown)
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=5;
-                }
-                break;
-
-            //Telephone
-            case 5:
-                popUps[current].SetActive(true);
-
-                //Simulation is still paused
-
-                //When any key down
-                if (Input.anyKeyDown)
-                {
-                    popUps[current].SetActive(false);
-
-                    //Next popUp
-                    current=6;
-
-                    //Resumes simulation
-                    ResumeGame();
-                }
-                break;
-
-            //Intersection
-            case 6:
-                //In intersection
-                if (atIntersection)
-                {
+            switch (current)
+            {
+                //Move left 'A'
+                case 0:
                     popUps[current].SetActive(true);
 
-                    //When 'A' or 'D' pressed
-                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+                    //When 'A' pressed
+                    if (Input.GetKeyDown(KeyCode.A))
                     {
                         popUps[current].SetActive(false);
 
                         //Next popUp
-                        current++;
+                        current = 1;
                     }
-                }
-                break;
+                    break;
 
-            //Don't get caught
-            default:
-                popUps[current].SetActive(true);
+                //Move right 'D'
+                case 1:
+                    popUps[current].SetActive(true);
 
-                //Timer ends
-                if(showTime<= 0)
-                {
-                    popUps[current].SetActive(false);
-                }
-                else
-                {
-                    //Reduces timer
-                    showTime -= Time.deltaTime;
-                }
+                    //When 'D' pressed
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        popUps[current].SetActive(false);
 
-                break;
+                        //Next popUp
+                        current = 2;
+                    }
+                    break;
+
+                //Jump 'Space'
+                case 2:
+                    popUps[current].SetActive(true);
+
+                    //When 'Space' pressed
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        popUps[current].SetActive(false);
+
+                        //Next popUp
+                        current = 3;
+                    }
+                    break;
+
+                //Stamina
+                case 3:
+                    popUps[current].SetActive(true);
+
+                    //Pauses simulation so that player can read the popUp
+                    PauseGame();
+
+                    //When any key down
+                    if (Input.anyKeyDown)
+                    {
+                        popUps[current].SetActive(false);
+
+                        //Next popUp
+                        current = 4;
+                    }
+                    break;
+
+                //Keys
+                case 4:
+                    popUps[current].SetActive(true);
+
+                    //Simulation is still paused
+
+                    //When any key down
+                    if (Input.anyKeyDown)
+                    {
+                        popUps[current].SetActive(false);
+
+                        //Next popUp
+                        current = 5;
+                    }
+                    break;
+
+                //Telephone
+                case 5:
+                    popUps[current].SetActive(true);
+
+                    //Simulation is still paused
+
+                    //When any key down
+                    if (Input.anyKeyDown)
+                    {
+                        popUps[current].SetActive(false);
+
+                        //Next popUp
+                        current = 6;
+
+                        //Resumes simulation
+                        ResumeGame();
+                    }
+                    break;
+
+                //Intersection
+                case 6:
+                    //In intersection
+                    if (atIntersection)
+                    {
+                        popUps[current].SetActive(true);
+
+                        //When 'A' or 'D' pressed
+                        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+                        {
+                            popUps[current].SetActive(false);
+
+                            //Next popUp
+                            current++;
+                        }
+                    }
+                    break;
+
+                //Don't get caught
+                default:
+                    popUps[current].SetActive(true);
+
+                    //Timer ends
+                    if (showTime <= 0)
+                    {
+                        popUps[current].SetActive(false);
+                    }
+                    else
+                    {
+                        //Reduces timer
+                        showTime -= Time.deltaTime;
+                    }
+
+                    break;
+            }
         }
     }
 

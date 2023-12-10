@@ -25,6 +25,7 @@ public class TurnControl : MonoBehaviour
         //Has entered an intersection
         if (canTurn)
         {
+            //Can make a turn
             Turn();
         }
     }
@@ -48,20 +49,20 @@ public class TurnControl : MonoBehaviour
 
     }
 
-    //Exits trigger area
-    private void OnTriggerExit(Collider other)
-    {
-        //With an intersection
-        if (other.gameObject.CompareTag("Intersection"))
-        {
-            Debug.Log("No longer at intersection");
+    ////Exits trigger area
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    //With an intersection
+    //    if (other.gameObject.CompareTag("Intersection"))
+    //    {
+    //        Debug.Log("No longer at intersection");
 
-            //Resets values
-            canTurn = false;
-            left = false;
-            right = false;
-        }
-    }
+    //        //Resets values
+    //        canTurn = false;
+    //        left = false;
+    //        right = false;
+    //    }
+    //}
 
     //Turn to last selected side before reaching turnpoint
     void Turn()
@@ -75,7 +76,7 @@ public class TurnControl : MonoBehaviour
             if (left)
             {
                 //Centers object to intersection
-                position2 = turnPoint;
+                //position2 = turnPoint;
 
                 //Rotates object
                 transform.Rotate(0f, -90f, 0f);
@@ -92,7 +93,7 @@ public class TurnControl : MonoBehaviour
             else if (right)
             {
                 //Centers object to intersection
-                position2 = turnPoint;
+                //position2 = turnPoint;
 
                 //Rotates object
                 transform.Rotate(0f, 90f, 0f);
