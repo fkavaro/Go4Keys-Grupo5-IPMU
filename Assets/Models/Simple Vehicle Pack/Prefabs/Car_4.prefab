@@ -425,7 +425,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4870167790249810}
   - component: {fileID: 370890529241154542}
-  - component: {fileID: 6614427221640582860}
   m_Layer: 0
   m_Name: Car_4
   m_TagString: Untagged
@@ -472,26 +471,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9999999, y: 0.44143254, z: 2.3840902}
-  m_Center: {x: 0, y: 0.20669638, z: 0.0000006067337}
---- !u!65 &6614427221640582860
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646981259178978}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9999999, y: 0.26797846, z: 0.8555437}
-  m_Center: {x: 0, y: 0.5285682, z: -0.09454175}
+  m_Size: {x: 0.9999999, y: 0.67289233, z: 2.3840902}
+  m_Center: {x: 0, y: 0.32242623, z: 0.0000006067337}

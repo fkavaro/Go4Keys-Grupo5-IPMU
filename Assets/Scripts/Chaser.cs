@@ -8,15 +8,15 @@ public class Chaser : MonoBehaviour
     [SerializeField] Transform target;//Object to chase
 
     //Speeds
-    [SerializeField] float chaseSpeed = 0.2f;//Related to its local position (parent)
+    [SerializeField] float chaseSpeed = 0.1f;//Related to its parent speed
     private float originalSpeed;//Initial chase speed
-    private  float speedIncrement = 4f;
+    private float incrementedSpeed;//Speed when player has stopped
     [SerializeField] float jumpForce = 7.0f;
 
     //Trigger layer
     [SerializeField] LayerMask jumpsOver;//Will automatically jump over this layer
     [SerializeField] LayerMask jumpsOn;//Will jump if also touches this layer
-    [SerializeField] float checkerRadious = 1.5f;//Radious of chaser checker
+    private float checkerRadious = .5f;//Radious of chaser checker
 
     //Checkers
     [SerializeField] Transform chaserChecker;//To jump automatically
@@ -30,9 +30,16 @@ public class Chaser : MonoBehaviour
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] Result result;
 
+    //Empty box for chaser's rigid body
+    Rigidbody chaser;
+
     void Start()
     {
         originalSpeed = chaseSpeed;//Save initial chase speed
+        incrementedSpeed = chaseSpeed * 30;
+
+        //Save chaser's rigid body in emptybox
+        chaser = transform.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -49,8 +56,8 @@ public class Chaser : MonoBehaviour
     //Changes chase speed according to target movement
     private void UpdateChaseSpeed()
     {
-        // Check for obstacles in front of target
-        if (Physics.CheckSphere(targetChecker.position, .3f, jumpsOver))
+        //Obstacle in front of target (has stopped)
+        if (Physics.CheckSphere(targetChecker.position, .4f, jumpsOver)) //Same radious as EndlessRunner.CheckObstacle
         {
             Debug.Log("Chaser speed increased");
 
@@ -58,8 +65,9 @@ public class Chaser : MonoBehaviour
             targetRunning = false;
 
             //Increment chase speed because player has stopped
-            chaseSpeed = originalSpeed + speedIncrement;
+            chaseSpeed = incrementedSpeed;
         }
+        //No obstacle in front (target still running)
         else
         {
             //Original chase speed
@@ -86,16 +94,22 @@ public class Chaser : MonoBehaviour
         if (Physics.CheckSphere(chaserChecker.position, checkerRadious, jumpsOver)
             && Physics.CheckSphere(chaserChecker.position, checkerRadious, jumpsOn)) {
             //Jumps if target is running
-            if (targetRunning) { 
+            if (targetRunning) {
+
+                Debug.Log("Chaser jumped");
+
                 Jump();
             }
         }
     }
 
-    //Moves the player in Y axis to jump height
+    //Moves the chaser in Y axis to jump height
     private void Jump()
     {
-        transform.Translate(jumpForce * Time.deltaTime * transform.up);//Transform.up to go upwards
+        //Maintains velocities in x and z axis but increments the y with jumpforce
+        chaser.velocity = new Vector3(chaser.velocity.x, jumpForce, chaser.velocity.z);
+
+        Debug.Log("Chaser jumped");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -109,7 +123,6 @@ public class Chaser : MonoBehaviour
 
             pauseMenu.EndResult();//End game UI
             result.Caught();//Result
-
         }
     }
 }

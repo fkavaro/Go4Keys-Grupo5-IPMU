@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Collecter : MonoBehaviour
 {
-    [SerializeField] Transform keysInScene;//Contains all the keys in scene
+    //[SerializeField] Transform keysInScene;//Contains all the keys in scene
     [SerializeField] Transform keysLeftUI;//Contains all left keys icons in UI
     [SerializeField] Transform keysFoundUI;//Contains all found keys icons in UI
     private GameObject[] keysLeftArray;//Array of gray keys in UI
@@ -22,8 +22,8 @@ public class Collecter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Counts all keys left in scene
-        keysLeft = keysInScene.childCount;
+        //Counts keys left in UI
+        keysLeft = keysLeftUI.childCount;
 
         //Creates arrays
         keysLeftArray = new GameObject[keysLeftUI.childCount];

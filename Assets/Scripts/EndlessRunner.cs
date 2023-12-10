@@ -11,11 +11,11 @@ public class EndlessRunner : MonoBehaviour
     Transform parent;
 
     //Speeds
-    [SerializeField] float forwardSpeed = 5.0f;//Moving forward
+    [SerializeField] float forwardSpeed = 7.0f;//Moving forward
     private float forwardValue;
-    [SerializeField] float jumpForce = 8.0f;//Jumping
+    [SerializeField] float jumpForce = 7.0f;//Jumping
 
-    //Checkers of layer in that position
+    //Checker of layer in that position
     [SerializeField] Transform groundChecker;
     [SerializeField] Transform obstacleChecker;
 
@@ -58,8 +58,8 @@ public class EndlessRunner : MonoBehaviour
     //Check for obstacles in front
     private void CheckObstacle()
     {
-        //Creates a sphere in checker that's triggered by an object of the stop layer (obstacle) 0.3
-        if (Physics.CheckSphere(obstacleChecker.position, .4f, stopLayer))
+        //Creates a sphere in checker that's triggered by an object of the stop layer (obstacle)
+        if (Physics.CheckSphere(obstacleChecker.position, .4f, stopLayer))//Same radious as Chaser.UpdateChaseSpeed
         {
             Debug.Log("Player has stopped");
 
@@ -90,14 +90,14 @@ public class EndlessRunner : MonoBehaviour
         player.velocity = new Vector3(player.velocity.x, jumpForce, player.velocity.z);
         jumpSound.Play();
 
-        Debug.Log("Jump");
+        Debug.Log("Player jumped");
     }
 
     //Check it's touching ground with checker
     bool CheckGround()
     {
         //Creates a small sphere in feet position that detects the floor layer
-        return Physics.CheckSphere(groundChecker.position, .3f, jumpLayer);
+        return Physics.CheckSphere(groundChecker.position, 0.2f, jumpLayer);
     }
 }
 

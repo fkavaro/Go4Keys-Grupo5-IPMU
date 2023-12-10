@@ -342,7 +342,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4870167790249810}
   - component: {fileID: 6432306712066396675}
-  - component: {fileID: 320290249626105154}
   m_Layer: 0
   m_Name: Police_car
   m_TagString: Untagged
@@ -389,29 +388,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999994, y: 0.46453553, z: 2.3840904}
-  m_Center: {x: -1.3318747e-21, y: 0.21824792, z: 0.00000060673375}
---- !u!65 &320290249626105154
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646981259178978}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.99999994, y: 0.26797846, z: 1.0158795}
-  m_Center: {x: 8.682956e-17, y: 0.5285682, z: -0.17470963}
+  m_Size: {x: 0.99999994, y: 0.7386071, z: 2.3840904}
+  m_Center: {x: -1.3318747e-21, y: 0.35528377, z: 0.00000060673375}
 --- !u!1 &1770694637400948
 GameObject:
   m_ObjectHideFlags: 0
