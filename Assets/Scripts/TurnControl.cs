@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 //TURN IN INTERSECTIONS TURNPOINTS
@@ -25,14 +22,14 @@ public class TurnControl : MonoBehaviour
         //Saves X,Z position of this object
         position2 = new Vector2(transform.position.x, transform.position.z);
 
-        //Triggers collider of intersection and hasn't turned yet
+        //Has entered an intersection
         if (canTurn)
         {
             Turn();
         }
     }
 
-    //Check trigger with an object
+    //Enters trigger area
     private void OnTriggerEnter(Collider other)
     {
         //With an intersection
@@ -40,28 +37,51 @@ public class TurnControl : MonoBehaviour
         {
             Debug.Log("At intersection");
 
-            //Can make a turn
-            canTurn=true;
-
-            //Saves intersection center
+            //Saves intersection center (X,Z)
             turnPoint = new Vector2(other.gameObject.transform.position.x, other.gameObject.transform.position.z) ;
+
+            Debug.Log(turnPoint);
+
+            //Can make a turn
+            canTurn = true;
         }
 
+    }
+
+    //Exits trigger area
+    private void OnTriggerExit(Collider other)
+    {
+        //With an intersection
+        if (other.gameObject.CompareTag("Intersection"))
+        {
+            Debug.Log("No longer at intersection");
+
+            //Resets values
+            canTurn = false;
+            left = false;
+            right = false;
+        }
     }
 
     //Turn to last selected side before reaching turnpoint
     void Turn()
     {
-        //The distance between this object and the turnpoint at least 0.1f
-        if (Vector2.Distance(position2, turnPoint) <= 0.1f)
+        //The distance between this object and the turnpoint at least 0.4f
+        if (Vector2.Distance(position2, turnPoint) <= 0.4f)
         {
-            Debug.Log("In turn point");
+            Debug.Log("At turn point");
 
             //Turn to LEFT
             if (left)
             {
+                //Centers object to intersection
+                position2 = turnPoint;
+
+                //Rotates object
                 transform.Rotate(0f, -90f, 0f);
-                left = false;
+
+                //Can't make any more turn 
+                canTurn = false;
 
                 turningSound.Play();
 
@@ -69,35 +89,51 @@ public class TurnControl : MonoBehaviour
             }
 
             //Turn to RIGHT
-            if (right)
+            else if (right)
             {
+                //Centers object to intersection
+                position2 = turnPoint;
+
+                //Rotates object
                 transform.Rotate(0f, 90f, 0f);
-                right = false;
+
+                //Can't make any more turn 
+                canTurn = false;
 
                 turningSound.Play();
 
                 Debug.Log("Has rotated to right");
             }
 
-            //Has passed the turnpoint
-            canTurn = false;
+            //Has passed the turnpoint and continued forward
+            else
+            {
+                Debug.Log("Has continued forward");
+
+                canTurn = false;
+            }
 
         }
+        //Not in turn point
         else
         {
-            //A is pressed:Turn to LEFT
-            if (Input.GetKeyDown(KeyCode.A))
+            //Hasn't made a turn
+            if (canTurn)
             {
-                Debug.Log("A pressed");
-                left = true;
-                right = false;//The other side is neglected
-            }
-            //D is pressed: turn to RIGHT
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                Debug.Log("D pressed");
-                right = true;
-                left = false;//The other side is neglected
+                //A is pressed:Turn to LEFT
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    Debug.Log("A pressed");
+                    left = true;
+                    right = false;//The other side is neglected
+                }
+                //D is pressed: turn to RIGHT
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    Debug.Log("D pressed");
+                    right = true;
+                    left = false;//The other side is neglected
+                }
             }
         }
     }
@@ -109,6 +145,7 @@ public class TurnControl : MonoBehaviour
 /// before first frame (start):
 ///     
 /// every frame (update):
+///     updates position (X,Z) of this object
 ///     checks collision with turn area
 ///         if so, chooses side to turn before arriving to turn point (center of turn area)
 ///         rotates to that side at turn point

@@ -12,7 +12,7 @@ public class EndlessRunner : MonoBehaviour
 
     //Speeds
     [SerializeField] float forwardSpeed = 7.0f;//Moving forward
-    [SerializeField] float jumpForce = 7.0f;//Jumping
+    [SerializeField] float jumpForce = 8.0f;//Jumping
 
     //Checkers of layer in that position
     [SerializeField] Transform groundChecker;
