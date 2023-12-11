@@ -1,26 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-
-    // AUDIO
-    [SerializeField] AudioSource buttonSound;
-
-
-
     public void PlayGame()
     {
+        //Loads next scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        buttonSound.Play();
     }
 
     public void QuitGame()
     {
-        Debug.Log("QUIT!!");
+        //Quits game
         Application.Quit();
-        buttonSound.Play();
     }
 }

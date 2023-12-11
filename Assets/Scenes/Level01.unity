@@ -35158,7 +35158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &745508229
 Transform:
   m_ObjectHideFlags: 0
@@ -95375,7 +95375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1093916334}
-  chaseSpeed: 0.2
+  chaseSpeed: 0.1
   jumpForce: 7
   jumpsOver:
     serializedVersion: 2
@@ -95383,7 +95383,6 @@ MonoBehaviour:
   jumpsOn:
     serializedVersion: 2
     m_Bits: 8
-  checkerRadious: 0.7
   chaserChecker: {fileID: 879049642}
   targetChecker: {fileID: 1099792243}
   pauseMenu: {fileID: 381533223}
